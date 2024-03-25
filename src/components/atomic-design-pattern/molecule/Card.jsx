@@ -9,7 +9,7 @@ export default function Card({
   expirationDateMM = "",
   expirationDateYY = "",
   cardOwnerName = "",
-  onClick = () => {},
+  onClick,
   ...props
 }) {
   // 카드 번호
