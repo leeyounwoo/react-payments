@@ -18,21 +18,20 @@ export default function CardComplete({
     const formData = new FormData(event.currentTarget);
     const alias = formData.get("alias");
 
-    if (alias) {
-      const index = cardInfoList.findIndex((cardInfo) => {
-        return (
-          Object.values(cardInfo.cardNumber).join("_") ===
-          Object.values(cardNumber).join("_")
-        );
-      });
+    const index = cardInfoList.findIndex((cardInfo) => {
+      return (
+        Object.values(cardInfo.cardNumber).join("_") ===
+        Object.values(cardNumber).join("_")
+      );
+    });
 
-      if (index !== -1) {
-        const newCardInfoList = [...cardInfoList];
-        newCardInfoList[index].alias = alias;
-        setCardInfoList(newCardInfoList);
-        goToListPage();
-      }
+    if (index !== -1) {
+      const newCardInfoList = [...cardInfoList];
+      newCardInfoList[index].alias = alias;
+      setCardInfoList(newCardInfoList);
     }
+
+    goToListPage();
   };
 
   return (
