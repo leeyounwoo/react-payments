@@ -7,7 +7,7 @@ export default {
   component: Basic,
 };
 
-export function Basic(args) {
+export function Basic() {
   const [cardOwnerName, setCardOwnerName] = useState("");
 
   return (

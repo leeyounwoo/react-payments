@@ -8,7 +8,7 @@ export default {
   component: Basic,
 };
 
-export function Basic(args) {
+export function Basic() {
   const [expirationDate, setExpirationDate] = useState({
     [MONTH]: "",
     [YEAR]: "",

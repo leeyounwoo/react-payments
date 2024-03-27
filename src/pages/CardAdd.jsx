@@ -12,6 +12,7 @@ import InputContainer from "../components/atomic-design-pattern/organism/InputCo
 import InputTitle from "../components/atomic-design-pattern/atom/InputTitle";
 import InputGroup from "../components/atomic-design-pattern/molecule/InputGroup";
 import { CardContext } from "../../providers/CardState/CardStateProvider";
+import { useAutoFocus } from "../hook/useAutoFocus";
 
 export default function CardAdd({
   goToListPage,
@@ -19,7 +20,6 @@ export default function CardAdd({
   setCardInfoList,
 }) {
   const { cardState } = useContext(CardContext);
-
   const {
     cardNumber,
     expirationDate,
@@ -28,6 +28,15 @@ export default function CardAdd({
     password,
     alias,
   } = cardState;
+
+  const {
+    cardNumberRef,
+    expirationDateRef,
+    cardOwnerRef,
+    securityCodeRef,
+    passwordRef,
+    changeFocus,
+  } = useAutoFocus();
 
   // 카드 번호 16자리
   const isCardNumberValidate =
@@ -85,12 +94,15 @@ export default function CardAdd({
       {/* 카드 번호 */}
       <InputContainer>
         <InputTitle>카드 번호</InputTitle>
-        <CardNumberInput />
+        <CardNumberInput ref={cardNumberRef} changeFocus={changeFocus} />
       </InputContainer>
       {/* 만료일 */}
       <InputContainer>
         <InputTitle>만료일</InputTitle>
-        <ExpirationDateInput />
+        <ExpirationDateInput
+          ref={expirationDateRef}
+          changeFocus={changeFocus}
+        />
       </InputContainer>
       {/* 카드 소유자 이름 */}
       <InputContainer>
@@ -100,17 +112,17 @@ export default function CardAdd({
             {cardOwnerName.length} / {CARD_OWNER_NAME_MAX_LENGTH}
           </InputTitle>
         </InputGroup>
-        <CardOwnerNameInput />
+        <CardOwnerNameInput ref={cardOwnerRef} changeFocus={changeFocus} />
       </InputContainer>
       {/* 보안 코드 */}
       <InputContainer>
         <InputTitle>보안코드(CVC/CVV)</InputTitle>
-        <SecurityCodeInput />
+        <SecurityCodeInput ref={securityCodeRef} changeFocus={changeFocus} />
       </InputContainer>
       {/* 카드 비밀번호 */}
       <InputContainer>
         <InputTitle>카드 비밀번호</InputTitle>
-        <PasswordInput />
+        <PasswordInput ref={passwordRef} changeFocus={changeFocus} />
       </InputContainer>
       {isShowNextButton && (
         <div className="button-box">

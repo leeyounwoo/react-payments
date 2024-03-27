@@ -29,7 +29,7 @@ function App() {
           <CardComplete
             cardInfoList={cardInfoList}
             setCardInfoList={setCardInfoList}
-            onNext={() => setStep(PAGE.CARD_LIST)}
+            goToListPage={() => setStep(PAGE.CARD_LIST)}
           />
         )}
       </CardStateProvider>

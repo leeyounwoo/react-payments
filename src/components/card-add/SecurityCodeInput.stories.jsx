@@ -7,7 +7,7 @@ export default {
   component: Basic,
 };
 
-export function Basic(args) {
+export function Basic() {
   const [securityCode, setSecurityCode] = useState("");
 
   return (
