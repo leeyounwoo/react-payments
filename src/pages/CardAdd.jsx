@@ -40,24 +40,16 @@ export default function CardAdd({
   } = useAutoFocus();
 
   // 카드 번호 16자리
-  const isCardNumberValidate =
-    Object.values(cardNumber).reduce((total, nowValue) => {
-      return total + nowValue.length;
-    }, 0) === 16;
+  const isCardNumberValidate = Object.values(cardNumber).join("").length === 16;
 
   // 만료일 2자리 + 2자리
   const isExpirationDateValidate =
-    Object.values(expirationDate).reduce((total, nowValue) => {
-      return total + nowValue.length;
-    }, 0) === 4;
+    Object.values(expirationDate).join("").length === 4;
 
   // 보안코드 3자리
   const isSecurityCodeValidate = securityCode.length === 3;
   // 카드 비밀번호 2자리
-  const isPasswordValidate =
-    Object.values(password).reduce((total, nowValue) => {
-      return total + nowValue.length;
-    }, 0) === 2;
+  const isPasswordValidate = Object.values(password).join("").length === 2;
 
   // 다음 버튼 보여줄지
   const isShowNextButton =
@@ -75,7 +67,6 @@ export default function CardAdd({
 
     goToCompletePage();
   };
-  console.log(cardNumber);
 
   return (
     <form onSubmit={onSubmitCardAdd}>
@@ -97,9 +88,7 @@ export default function CardAdd({
       <InputContainer>
         <InputTitle>카드 번호</InputTitle>
         <CardNumberInput ref={cardNumberRef} changeFocus={changeFocus} />
-        <InputError
-          condition={Object.values(cardNumber).join("").length === 16}
-        >
+        <InputError condition={isCardNumberValidate}>
           카드 번호를 모두 입력해주세요.
         </InputError>
       </InputContainer>
@@ -111,9 +100,7 @@ export default function CardAdd({
           ref={expirationDateRef}
           changeFocus={changeFocus}
         />
-        <InputError
-          condition={Object.values(expirationDate).join("").length === 4}
-        >
+        <InputError condition={isExpirationDateValidate}>
           만료일을 모두 입력해주세요.
         </InputError>
       </InputContainer>
@@ -131,7 +118,7 @@ export default function CardAdd({
       <InputContainer>
         <InputTitle>보안코드(CVC/CVV)</InputTitle>
         <SecurityCodeInput ref={securityCodeRef} changeFocus={changeFocus} />
-        <InputError condition={securityCode.length === 3}>
+        <InputError condition={isSecurityCodeValidate}>
           보안코드를 모두 입력해주세요.
         </InputError>
       </InputContainer>
@@ -139,7 +126,7 @@ export default function CardAdd({
       <InputContainer>
         <InputTitle>카드 비밀번호</InputTitle>
         <PasswordInput ref={passwordRef} changeFocus={changeFocus} />
-        <InputError condition={Object.values(password).join("").length === 2}>
+        <InputError condition={isPasswordValidate}>
           카드 비밀번호를 모두 입력해주세요.
         </InputError>
       </InputContainer>
