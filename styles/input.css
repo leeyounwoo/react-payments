@@ -23,6 +23,18 @@
   color: #525252;
 }
 
+.input-error {
+  display: flex;
+  align-items: center;
+
+  font-size: 12px;
+  line-height: 14px;
+
+  margin-bottom: 4px;
+
+  color: #e34141;
+}
+
 .input-basic {
   background-color: #ecebf1;
   height: 45px;

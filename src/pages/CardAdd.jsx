@@ -13,6 +13,7 @@ import InputTitle from "../components/atomic-design-pattern/atom/InputTitle";
 import InputGroup from "../components/atomic-design-pattern/molecule/InputGroup";
 import { CardContext } from "../../providers/CardState/CardStateProvider";
 import { useAutoFocus } from "../hook/useAutoFocus";
+import InputError from "../components/atomic-design-pattern/atom/InputError";
 
 export default function CardAdd({
   goToListPage,
@@ -74,6 +75,7 @@ export default function CardAdd({
 
     goToCompletePage();
   };
+  console.log(cardNumber);
 
   return (
     <form onSubmit={onSubmitCardAdd}>
@@ -93,7 +95,14 @@ export default function CardAdd({
       />
       {/* 카드 번호 */}
       <InputContainer>
-        <InputTitle>카드 번호</InputTitle>
+        <InputGroup>
+          <InputTitle>카드 번호</InputTitle>
+          <InputError
+            condition={Object.values(cardNumber).join("").length === 16}
+          >
+            카드 번호를 모두 입력해주세요.
+          </InputError>
+        </InputGroup>
         <CardNumberInput ref={cardNumberRef} changeFocus={changeFocus} />
       </InputContainer>
       {/* 만료일 */}
