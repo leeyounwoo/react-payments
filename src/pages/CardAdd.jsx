@@ -95,23 +95,27 @@ export default function CardAdd({
       />
       {/* 카드 번호 */}
       <InputContainer>
-        <InputGroup>
-          <InputTitle>카드 번호</InputTitle>
-          <InputError
-            condition={Object.values(cardNumber).join("").length === 16}
-          >
-            카드 번호를 모두 입력해주세요.
-          </InputError>
-        </InputGroup>
+        <InputTitle>카드 번호</InputTitle>
         <CardNumberInput ref={cardNumberRef} changeFocus={changeFocus} />
+        <InputError
+          condition={Object.values(cardNumber).join("").length === 16}
+        >
+          카드 번호를 모두 입력해주세요.
+        </InputError>
       </InputContainer>
       {/* 만료일 */}
       <InputContainer>
         <InputTitle>만료일</InputTitle>
+
         <ExpirationDateInput
           ref={expirationDateRef}
           changeFocus={changeFocus}
         />
+        <InputError
+          condition={Object.values(expirationDate).join("").length === 4}
+        >
+          만료일을 모두 입력해주세요.
+        </InputError>
       </InputContainer>
       {/* 카드 소유자 이름 */}
       <InputContainer>
@@ -127,11 +131,17 @@ export default function CardAdd({
       <InputContainer>
         <InputTitle>보안코드(CVC/CVV)</InputTitle>
         <SecurityCodeInput ref={securityCodeRef} changeFocus={changeFocus} />
+        <InputError condition={securityCode.length === 3}>
+          보안코드를 모두 입력해주세요.
+        </InputError>
       </InputContainer>
       {/* 카드 비밀번호 */}
       <InputContainer>
         <InputTitle>카드 비밀번호</InputTitle>
         <PasswordInput ref={passwordRef} changeFocus={changeFocus} />
+        <InputError condition={Object.values(password).join("").length === 2}>
+          카드 비밀번호를 모두 입력해주세요.
+        </InputError>
       </InputContainer>
       {isShowNextButton && (
         <div className="button-box">
