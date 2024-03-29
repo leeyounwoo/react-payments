@@ -15,6 +15,7 @@ import { CardContext } from "../../providers/CardState/CardStateProvider";
 import { useAutoFocus } from "../hook/useAutoFocus";
 import InputError from "../components/atomic-design-pattern/atom/InputError";
 import Modal from "../components/atomic-design-pattern/atom/Modal";
+import { FIRST_NUMBER } from "../constants/cardNumber";
 
 export default function CardAdd({
   goToListPage,
@@ -163,7 +164,11 @@ export default function CardAdd({
         <div className="flex-center">
           <div
             className="modal-item-container"
-            onClick={() => setCardCompany(2)}
+            onClick={() => {
+              setCardCompany(2);
+              expirationDateRef.current[MONTH].focus();
+              setModalOpen(false);
+            }}
           >
             <div className="modal-item-dot"></div>
             <span className="modal-item-name">클린 카드</span>
