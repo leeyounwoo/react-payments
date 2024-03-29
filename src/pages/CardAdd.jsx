@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState, useEffect, useRef } from "react";
 import Card from "../components/atomic-design-pattern/molecule/Card";
 import CardNumberInput from "../components/card-add/CardNumberInput";
 import { MONTH, YEAR } from "../constants/expirationDate";
@@ -14,6 +14,7 @@ import InputGroup from "../components/atomic-design-pattern/molecule/InputGroup"
 import { CardContext } from "../../providers/CardState/CardStateProvider";
 import { useAutoFocus } from "../hook/useAutoFocus";
 import InputError from "../components/atomic-design-pattern/atom/InputError";
+import Modal from "../components/atomic-design-pattern/atom/Modal";
 
 export default function CardAdd({
   goToListPage,
@@ -29,6 +30,8 @@ export default function CardAdd({
     password,
     alias,
   } = cardState;
+  const [modalOpen, setModalOpen] = useState(false);
+  const modalBackground = useRef(null);
 
   const {
     cardNumberRef,
@@ -67,6 +70,10 @@ export default function CardAdd({
 
     goToCompletePage();
   };
+
+  useEffect(() => {
+    setModalOpen(Object.values(cardNumber).join("").length === 16);
+  }, [cardNumber]);
 
   return (
     <form onSubmit={onSubmitCardAdd}>
@@ -137,6 +144,53 @@ export default function CardAdd({
           </Button>
         </div>
       )}
+
+      <Modal
+        open={modalOpen}
+        ref={modalBackground}
+        onClick={(e) => {
+          if (e.target === modalBackground.current) {
+            setModalOpen(false);
+          }
+        }}
+      >
+        <div className="flex-center">
+          <div className="modal-item-container">
+            <div className="modal-item-dot"></div>
+            <span className="modal-item-name">클린 카드</span>
+          </div>
+          <div className="modal-item-container">
+            <div className="modal-item-dot"></div>
+            <span className="modal-item-name">클린 카드</span>
+          </div>
+          <div className="modal-item-container">
+            <div className="modal-item-dot"></div>
+            <span className="modal-item-name">클린 카드</span>
+          </div>
+          <div className="modal-item-container">
+            <div className="modal-item-dot"></div>
+            <span className="modal-item-name">클린 카드</span>
+          </div>
+        </div>
+        <div className="flex-center">
+          <div className="modal-item-container">
+            <div className="modal-item-dot"></div>
+            <span className="modal-item-name">클린 카드</span>
+          </div>
+          <div className="modal-item-container">
+            <div className="modal-item-dot"></div>
+            <span className="modal-item-name">클린 카드</span>
+          </div>
+          <div className="modal-item-container">
+            <div className="modal-item-dot"></div>
+            <span className="modal-item-name">클린 카드</span>
+          </div>
+          <div className="modal-item-container">
+            <div className="modal-item-dot"></div>
+            <span className="modal-item-name">클린 카드</span>
+          </div>
+        </div>
+      </Modal>
     </form>
   );
 }
