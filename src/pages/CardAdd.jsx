@@ -30,6 +30,8 @@ export default function CardAdd({
     password,
     alias,
   } = cardState;
+  const [cardCompany, setCardCompany] = useState(-1);
+
   const [modalOpen, setModalOpen] = useState(false);
   const modalBackground = useRef(null);
 
@@ -63,7 +65,7 @@ export default function CardAdd({
 
   const onSubmitCardAdd = (event) => {
     event.preventDefault();
-    console.log(cardState);
+
     setCardInfoList((prev) => {
       return [...prev, cardState];
     });
@@ -77,6 +79,7 @@ export default function CardAdd({
 
   return (
     <form onSubmit={onSubmitCardAdd}>
+      213
       <h2 className="page-title">
         <Button variant="link" onClick={goToListPage}>
           {"<"}
@@ -94,7 +97,11 @@ export default function CardAdd({
       {/* 카드 번호 */}
       <InputContainer>
         <InputTitle>카드 번호</InputTitle>
-        <CardNumberInput ref={cardNumberRef} changeFocus={changeFocus} />
+        <CardNumberInput
+          ref={cardNumberRef}
+          changeFocus={changeFocus}
+          cardCompany={cardCompany}
+        />
         <InputError condition={isCardNumberValidate}>
           카드 번호를 모두 입력해주세요.
         </InputError>
@@ -144,7 +151,6 @@ export default function CardAdd({
           </Button>
         </div>
       )}
-
       <Modal
         open={modalOpen}
         ref={modalBackground}
@@ -155,7 +161,10 @@ export default function CardAdd({
         }}
       >
         <div className="flex-center">
-          <div className="modal-item-container">
+          <div
+            className="modal-item-container"
+            onClick={() => setCardCompany(2)}
+          >
             <div className="modal-item-dot"></div>
             <span className="modal-item-name">클린 카드</span>
           </div>
