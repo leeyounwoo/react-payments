@@ -15,7 +15,11 @@ import { CardContext } from "../../providers/CardState/CardStateProvider";
 import { useAutoFocus } from "../hook/useAutoFocus";
 import InputError from "../components/atomic-design-pattern/atom/InputError";
 import Modal from "../components/atomic-design-pattern/atom/Modal";
-import { FOURTH_NUMBER } from "../constants/cardNumber";
+import {
+  FIRST_NUMBER,
+  SECOND_NUMBER,
+  THIRD_NUMBER,
+} from "../constants/cardNumber";
 
 export default function CardAdd({
   goToListPage,
@@ -31,6 +35,7 @@ export default function CardAdd({
     password,
     alias,
   } = cardState;
+  const [cardCompany, setCardCompany] = useState(-1);
 
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -73,16 +78,17 @@ export default function CardAdd({
   };
 
   useEffect(() => {
-    const isOpen = Object.values(cardNumber).join("").length === 16;
+    const isOpen =
+      cardNumber[FIRST_NUMBER].length + cardNumber[SECOND_NUMBER].length ===
+        8 && cardCompany === -1;
     setModalOpen(isOpen);
     if (isOpen) {
-      cardNumberRef.current[FOURTH_NUMBER].blur();
+      cardNumberRef.current[THIRD_NUMBER].blur();
     }
-  }, [cardNumber, cardNumberRef]);
+  }, [cardNumber, cardCompany, cardNumberRef]);
 
   return (
     <form onSubmit={onSubmitCardAdd}>
-      213
       <h2 className="page-title">
         <Button variant="link" onClick={goToListPage}>
           {"<"}
@@ -155,8 +161,9 @@ export default function CardAdd({
           <div
             className="modal-item-container"
             onClick={() => {
-              expirationDateRef.current[MONTH].focus();
+              cardNumberRef.current[THIRD_NUMBER].focus();
               setModalOpen(false);
+              setCardCompany(2);
             }}
           >
             <div className="modal-item-dot"></div>
