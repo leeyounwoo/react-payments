@@ -15,6 +15,7 @@ import { CardContext } from "../../providers/CardState/CardStateProvider";
 import { useAutoFocus } from "../hook/useAutoFocus";
 import InputError from "../components/atomic-design-pattern/atom/InputError";
 import Modal from "../components/atomic-design-pattern/atom/Modal";
+import { FOURTH_NUMBER } from "../constants/cardNumber";
 
 export default function CardAdd({
   goToListPage,
@@ -30,7 +31,6 @@ export default function CardAdd({
     password,
     alias,
   } = cardState;
-  const [cardCompany, setCardCompany] = useState(-1);
 
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -73,8 +73,12 @@ export default function CardAdd({
   };
 
   useEffect(() => {
-    setModalOpen(Object.values(cardNumber).join("").length === 16);
-  }, [cardNumber]);
+    const isOpen = Object.values(cardNumber).join("").length === 16;
+    setModalOpen(isOpen);
+    if (isOpen) {
+      cardNumberRef.current[FOURTH_NUMBER].blur();
+    }
+  }, [cardNumber, cardNumberRef]);
 
   return (
     <form onSubmit={onSubmitCardAdd}>
@@ -96,11 +100,7 @@ export default function CardAdd({
       {/* 카드 번호 */}
       <InputContainer>
         <InputTitle>카드 번호</InputTitle>
-        <CardNumberInput
-          ref={cardNumberRef}
-          changeFocus={changeFocus}
-          cardCompany={cardCompany}
-        />
+        <CardNumberInput ref={cardNumberRef} changeFocus={changeFocus} />
         <InputError condition={isCardNumberValidate}>
           카드 번호를 모두 입력해주세요.
         </InputError>
@@ -155,7 +155,6 @@ export default function CardAdd({
           <div
             className="modal-item-container"
             onClick={() => {
-              setCardCompany(2);
               expirationDateRef.current[MONTH].focus();
               setModalOpen(false);
             }}

@@ -11,10 +11,7 @@ import { getNumberString } from "../../util/regExp";
 import Input from "../atomic-design-pattern/atom/Input";
 import InputBox from "../atomic-design-pattern/molecule/InputBox";
 
-export default forwardRef(function CardNumberInput(
-  { changeFocus, cardCompany },
-  ref
-) {
+export default forwardRef(function CardNumberInput({ changeFocus }, ref) {
   const { cardState, setCardState } = useCardState();
 
   const onChangeCardNumber = (event) => {
@@ -22,13 +19,7 @@ export default forwardRef(function CardNumberInput(
 
     const onlyNumberValue = getNumberString(value);
 
-    if (name.split("_").pop() === FOURTH_NUMBER) {
-      if (cardCompany !== -1) {
-        changeFocus(name, onlyNumberValue, maxLength);
-      }
-    } else {
-      changeFocus(name, onlyNumberValue, maxLength);
-    }
+    changeFocus(name, onlyNumberValue, maxLength);
 
     setCardState((prev) => {
       const newCardNumber = {
