@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect, useRef } from "react";
+import { useContext, useState, useEffect } from "react";
 import Card from "../components/atomic-design-pattern/molecule/Card";
 import CardNumberInput from "../components/card-add/CardNumberInput";
 import { MONTH, YEAR } from "../constants/expirationDate";
@@ -15,7 +15,6 @@ import { CardContext } from "../../providers/CardState/CardStateProvider";
 import { useAutoFocus } from "../hook/useAutoFocus";
 import InputError from "../components/atomic-design-pattern/atom/InputError";
 import Modal from "../components/atomic-design-pattern/atom/Modal";
-import { FIRST_NUMBER } from "../constants/cardNumber";
 
 export default function CardAdd({
   goToListPage,
@@ -34,7 +33,6 @@ export default function CardAdd({
   const [cardCompany, setCardCompany] = useState(-1);
 
   const [modalOpen, setModalOpen] = useState(false);
-  const modalBackground = useRef(null);
 
   const {
     cardNumberRef,
@@ -152,15 +150,7 @@ export default function CardAdd({
           </Button>
         </div>
       )}
-      <Modal
-        open={modalOpen}
-        ref={modalBackground}
-        onClick={(e) => {
-          if (e.target === modalBackground.current) {
-            setModalOpen(false);
-          }
-        }}
-      >
+      <Modal open={modalOpen} setOpen={setModalOpen}>
         <div className="flex-center">
           <div
             className="modal-item-container"
