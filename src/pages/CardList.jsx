@@ -23,8 +23,13 @@ export default function CardList({
           <h2 className="page-title mb-10">보유 카드</h2>
         </div>
         {cardInfoList.map((cardInfo) => {
-          const { cardNumber, expirationDate, cardOwnerName, alias, theme } =
-            cardInfo;
+          const {
+            cardNumber,
+            expirationDate,
+            cardOwnerName,
+            alias,
+            cardCompany,
+          } = cardInfo;
           return (
             <Card
               alias={alias}
@@ -32,7 +37,7 @@ export default function CardList({
               expirationDateMM={expirationDate[MONTH]}
               expirationDateYY={expirationDate[YEAR]}
               cardOwnerName={cardOwnerName}
-              theme={theme}
+              cardCompany={cardCompany}
               key={getLocalStorageKeyByCardNumber(cardNumber)}
               onClick={() => onClickCard(cardInfo)}
             />

@@ -19,17 +19,7 @@ import { THIRD_NUMBER } from "../constants/cardNumber";
 import Dot from "../components/atomic-design-pattern/atom/Dot";
 import ModalItem from "../components/atomic-design-pattern/molecule/ModalItem";
 import Text from "../components/atomic-design-pattern/atom/Text";
-
-const cardCompanyList = [
-  { theme: "red", company: "포코카드" },
-  { theme: "green", company: "준 카드" },
-  { theme: "blue", company: "현석 카드" },
-  { theme: "pink", company: "윤호 카드" },
-  { theme: "aqua", company: "환오카드" },
-  { theme: "orange", company: "태은 카드" },
-  { theme: "yellow", company: "준일 카드" },
-  { theme: "green", company: "은규 카드" },
-];
+import { CARD_COMPANY_THEME_MAP } from "../constants/cardCompany";
 
 export default function CardAdd({
   goToListPage,
@@ -44,7 +34,7 @@ export default function CardAdd({
     cardOwnerName,
     password,
     alias,
-    theme,
+    cardCompany,
   } = cardState;
 
   // 카드번호 유효한지
@@ -108,7 +98,7 @@ export default function CardAdd({
     cardNumberRef.current[THIRD_NUMBER].focus();
     setModalOpen(false);
     setCardState((prevCardState) => {
-      return { ...prevCardState, theme: id };
+      return { ...prevCardState, cardCompany: id };
     });
   };
 
@@ -127,7 +117,7 @@ export default function CardAdd({
         expirationDateMM={expirationDate[MONTH]}
         expirationDateYY={expirationDate[YEAR]}
         cardOwnerName={cardOwnerName}
-        theme={theme}
+        cardCompany={cardCompany}
       />
       {/* 카드 번호 */}
       <InputContainer>
@@ -186,12 +176,12 @@ export default function CardAdd({
       </div>
       <Modal open={modalOpen} setOpen={setModalOpen}>
         <div className="modal-grid">
-          {cardCompanyList.map(({ theme, company }) => {
+          {Object.keys(CARD_COMPANY_THEME_MAP).map((company) => {
             return (
-              <ModalItem key={company} name={theme}>
+              <ModalItem key={company}>
                 <Dot
-                  variant={theme}
-                  id={theme}
+                  variant={company}
+                  id={company}
                   onClick={onClickCardCompanyModal}
                 />
                 <Text className="modal-item-name">{company}</Text>

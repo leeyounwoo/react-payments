@@ -16,6 +16,7 @@ export default forwardRef(function CardNumberInput(
   ref
 ) {
   const { cardState, setCardState } = useCardState();
+  const { cardNumber } = cardState;
 
   const onChangeCardNumber = (event) => {
     const { value, name, maxLength } = event.target;
@@ -36,10 +37,7 @@ export default forwardRef(function CardNumberInput(
     });
 
     if (inputType === SECOND_NUMBER) {
-      if (
-        cardState[CARD_NUMBER][FIRST_NUMBER].length + onlyNumberValue.length ===
-        8
-      ) {
+      if (cardNumber[FIRST_NUMBER].length + onlyNumberValue.length === 8) {
         setModalOpen(true);
         ref.current[THIRD_NUMBER].blur();
       }
@@ -49,7 +47,7 @@ export default forwardRef(function CardNumberInput(
   return (
     <InputBox>
       <Input
-        value={cardState.cardNumber[FIRST_NUMBER]}
+        value={cardNumber[FIRST_NUMBER]}
         name={`${CARD_NUMBER}_${FIRST_NUMBER}`}
         ref={(el) => (ref.current[FIRST_NUMBER] = el)}
         maxLength="4"
@@ -58,12 +56,12 @@ export default forwardRef(function CardNumberInput(
 
       <Input
         defaultValue="-"
-        isHidden={cardState.cardNumber[FIRST_NUMBER].length !== 4}
+        isHidden={cardNumber[FIRST_NUMBER].length !== 4}
         disabled
       />
 
       <Input
-        value={cardState.cardNumber[SECOND_NUMBER]}
+        value={cardNumber[SECOND_NUMBER]}
         name={`${CARD_NUMBER}_${SECOND_NUMBER}`}
         ref={(el) => (ref.current[SECOND_NUMBER] = el)}
         type="text"
@@ -72,11 +70,11 @@ export default forwardRef(function CardNumberInput(
       />
       <Input
         defaultValue="-"
-        isHidden={cardState.cardNumber[SECOND_NUMBER].length !== 4}
+        isHidden={cardNumber[SECOND_NUMBER].length !== 4}
         disabled
       />
       <Input
-        value={cardState.cardNumber[THIRD_NUMBER]}
+        value={cardNumber[THIRD_NUMBER]}
         name={`${CARD_NUMBER}_${THIRD_NUMBER}`}
         ref={(el) => (ref.current[THIRD_NUMBER] = el)}
         type="password"
@@ -85,11 +83,11 @@ export default forwardRef(function CardNumberInput(
       />
       <Input
         defaultValue="-"
-        isHidden={cardState.cardNumber[THIRD_NUMBER].length !== 4}
+        isHidden={cardNumber[THIRD_NUMBER].length !== 4}
         disabled
       />
       <Input
-        value={cardState.cardNumber[FOURTH_NUMBER]}
+        value={cardNumber[FOURTH_NUMBER]}
         name={`${CARD_NUMBER}_${FOURTH_NUMBER}`}
         ref={(el) => (ref.current[FOURTH_NUMBER] = el)}
         type="password"
