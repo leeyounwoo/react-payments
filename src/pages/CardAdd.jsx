@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState } from "react";
 import Card from "../components/atomic-design-pattern/molecule/Card";
 import CardNumberInput from "../components/card-add/CardNumberInput";
 import { MONTH, YEAR } from "../constants/expirationDate";
@@ -15,12 +15,21 @@ import { CardContext } from "../../providers/CardState/CardStateProvider";
 import { useAutoFocus } from "../hook/useAutoFocus";
 import InputError from "../components/atomic-design-pattern/atom/InputError";
 import Modal from "../components/atomic-design-pattern/molecule/Modal";
-import {
-  FIRST_NUMBER,
-  SECOND_NUMBER,
-  THIRD_NUMBER,
-} from "../constants/cardNumber";
+import { THIRD_NUMBER } from "../constants/cardNumber";
 import Dot from "../components/atomic-design-pattern/atom/Dot";
+import ModalItem from "../components/atomic-design-pattern/molecule/ModalItem";
+import Text from "../components/atomic-design-pattern/atom/Text";
+
+const cardCompanyList = [
+  { theme: "red", company: "포코카드" },
+  { theme: "green", company: "준 카드" },
+  { theme: "blue", company: "현석 카드" },
+  { theme: "pink", company: "윤호 카드" },
+  { theme: "aqua", company: "환오카드" },
+  { theme: "orange", company: "태은 카드" },
+  { theme: "yellow", company: "준일 카드" },
+  { theme: "green", company: "은규 카드" },
+];
 
 export default function CardAdd({
   goToListPage,
@@ -36,7 +45,17 @@ export default function CardAdd({
     password,
     alias,
   } = cardState;
-  const [cardCompany, setCardCompany] = useState(-1);
+
+  // 카드번호 유효한지
+  const [isValidCardNumber, setIsValidCardNumber] = useState(true);
+  // 만료일 유효한지
+  const [isValidExpirationDate, setIsValidExpirationDate] = useState(true);
+  // 보안코드 유효한지
+  const [isValidSecurityCode, setIsValidSecurityCode] = useState(true);
+  // 비밀번호 2자리
+  const [isValidPassword, setIsValidPassword] = useState(true);
+
+  const [theme, setTheme] = useState("");
 
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -49,44 +68,40 @@ export default function CardAdd({
     changeFocus,
   } = useAutoFocus();
 
-  // 카드 번호 16자리
-  const isCardNumberValidate = Object.values(cardNumber).join("").length === 16;
-
-  // 만료일 2자리 + 2자리
-  const isExpirationDateValidate =
-    Object.values(expirationDate).join("").length === 4;
-
-  // 보안코드 3자리
-  const isSecurityCodeValidate = securityCode.length === 3;
-  // 카드 비밀번호 2자리
-  const isPasswordValidate = Object.values(password).join("").length === 2;
-
-  // 다음 버튼 보여줄지
-  const isShowNextButton =
-    isCardNumberValidate &&
-    isExpirationDateValidate &&
-    isSecurityCodeValidate &&
-    isPasswordValidate;
-
   const onSubmitCardAdd = (event) => {
     event.preventDefault();
 
-    setCardInfoList((prev) => {
-      return [...prev, cardState];
-    });
+    // 카드 번호 16자리
+    const isCardNumberValidLength =
+      Object.values(cardNumber).join("").length === 16;
+    setIsValidCardNumber(isCardNumberValidLength);
 
-    goToCompletePage();
-  };
+    // 만료일 2자리 + 2자리
+    const isExpirationDateValidLength =
+      Object.values(expirationDate).join("").length === 4;
+    setIsValidExpirationDate(isExpirationDateValidLength);
 
-  useEffect(() => {
-    const isOpen =
-      cardNumber[FIRST_NUMBER].length + cardNumber[SECOND_NUMBER].length ===
-        8 && cardCompany === -1;
-    setModalOpen(isOpen);
-    if (isOpen) {
-      cardNumberRef.current[THIRD_NUMBER].blur();
+    // 보안코드 3자리
+    const isSecurityCodeValidLength = securityCode.length === 3;
+    setIsValidSecurityCode(isSecurityCodeValidLength);
+
+    // 카드 비밀번호 2자리
+    const isPasswordValidLength = Object.values(password).join("").length === 2;
+    setIsValidPassword(isPasswordValidLength);
+
+    if (
+      isCardNumberValidLength &&
+      isExpirationDateValidLength &&
+      isSecurityCodeValidLength &&
+      isPasswordValidLength
+    ) {
+      setCardInfoList((prev) => {
+        return [...prev, cardState];
+      });
+
+      goToCompletePage();
     }
-  }, [cardNumber, cardCompany, cardNumberRef]);
+  };
 
   return (
     <form onSubmit={onSubmitCardAdd}>
@@ -103,12 +118,17 @@ export default function CardAdd({
         expirationDateMM={expirationDate[MONTH]}
         expirationDateYY={expirationDate[YEAR]}
         cardOwnerName={cardOwnerName}
+        theme={theme}
       />
       {/* 카드 번호 */}
       <InputContainer>
         <InputTitle>카드 번호</InputTitle>
-        <CardNumberInput ref={cardNumberRef} changeFocus={changeFocus} />
-        <InputError condition={isCardNumberValidate}>
+        <CardNumberInput
+          ref={cardNumberRef}
+          changeFocus={changeFocus}
+          setModalOpen={setModalOpen}
+        />
+        <InputError condition={isValidCardNumber}>
           카드 번호를 모두 입력해주세요.
         </InputError>
       </InputContainer>
@@ -120,7 +140,7 @@ export default function CardAdd({
           ref={expirationDateRef}
           changeFocus={changeFocus}
         />
-        <InputError condition={isExpirationDateValidate}>
+        <InputError condition={isValidExpirationDate}>
           만료일을 모두 입력해주세요.
         </InputError>
       </InputContainer>
@@ -138,7 +158,7 @@ export default function CardAdd({
       <InputContainer>
         <InputTitle>보안코드(CVC/CVV)</InputTitle>
         <SecurityCodeInput ref={securityCodeRef} changeFocus={changeFocus} />
-        <InputError condition={isSecurityCodeValidate}>
+        <InputError condition={isValidSecurityCode}>
           보안코드를 모두 입력해주세요.
         </InputError>
       </InputContainer>
@@ -146,60 +166,32 @@ export default function CardAdd({
       <InputContainer>
         <InputTitle>카드 비밀번호</InputTitle>
         <PasswordInput ref={passwordRef} changeFocus={changeFocus} />
-        <InputError condition={isPasswordValidate}>
+        <InputError condition={isValidPassword}>
           카드 비밀번호를 모두 입력해주세요.
         </InputError>
       </InputContainer>
-      {isShowNextButton && (
-        <div className="button-box">
-          <Button variant="link" type="submit">
-            다음
-          </Button>
-        </div>
-      )}
+      <div className="button-box">
+        <Button variant="link" type="submit">
+          다음
+        </Button>
+      </div>
       <Modal open={modalOpen} setOpen={setModalOpen}>
-        <div className="flex-center">
-          <div
-            className="modal-item-container"
-            onClick={() => {
-              cardNumberRef.current[THIRD_NUMBER].focus();
-              setModalOpen(false);
-              setCardCompany(2);
-            }}
-          >
-            <Dot variant="red" />
-            <span className="modal-item-name">클린 카드</span>
-          </div>
-          <div className="modal-item-container">
-            <Dot variant="green" />
-            <span className="modal-item-name">클린 카드</span>
-          </div>
-          <div className="modal-item-container">
-            <Dot variant="blue" />
-            <span className="modal-item-name">클린 카드</span>
-          </div>
-          <div className="modal-item-container">
-            <Dot variant="pink" />
-            <span className="modal-item-name">클린 카드</span>
-          </div>
-        </div>
-        <div className="flex-center">
-          <div className="modal-item-container">
-            <Dot variant="aqua" />
-            <span className="modal-item-name">클린 카드</span>
-          </div>
-          <div className="modal-item-container">
-            <Dot variant="orange" />
-            <span className="modal-item-name">클린 카드</span>
-          </div>
-          <div className="modal-item-container">
-            <Dot variant="yellow" />
-            <span className="modal-item-name">클린 카드</span>
-          </div>
-          <div className="modal-item-container">
-            <Dot variant="blueberry" />
-            <span className="modal-item-name">클린 카드</span>
-          </div>
+        <div className="modal-grid">
+          {cardCompanyList.map(({ theme, company }) => {
+            return (
+              <ModalItem
+                key={company}
+                onClick={() => {
+                  cardNumberRef.current[THIRD_NUMBER].focus();
+                  setModalOpen(false);
+                  setTheme(theme);
+                }}
+              >
+                <Dot variant={theme} />
+                <Text className="modal-item-name">{company}</Text>
+              </ModalItem>
+            );
+          })}
         </div>
       </Modal>
     </form>

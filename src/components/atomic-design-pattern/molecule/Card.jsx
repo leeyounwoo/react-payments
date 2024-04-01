@@ -9,6 +9,7 @@ export default function Card({
   expirationDateMM = "",
   expirationDateYY = "",
   cardOwnerName = "",
+  theme = "",
   onClick,
   ...props
 }) {
@@ -30,18 +31,18 @@ export default function Card({
   const displayCardOwnerName = cardOwnerName;
 
   return (
-    <CardBox onClick={onClick} {...props}>
+    <CardBox theme={theme} onClick={onClick} {...props}>
       <div className="card-top">
-        <Text>{alias}</Text>
+        <Text className="card-text">{alias}</Text>
       </div>
       <div className="card-middle">
         <Chip />
-        <Text>{displayCardNumber}</Text>
+        <Text className="card-text">{displayCardNumber}</Text>
       </div>
       <div className="card-bottom">
         <div className="card-bottom_info">
-          <Text>{displayCardOwnerName}</Text>
-          <Text>
+          <Text className="card-text">{displayCardOwnerName}</Text>
+          <Text className="card-text">
             {displayExpirationDateMM} / {displayExpirationDateYY}
           </Text>
         </div>
