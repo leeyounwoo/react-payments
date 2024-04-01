@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Card from "../components/atomic-design-pattern/molecule/Card";
 import CardNumberInput from "../components/card-add/CardNumberInput";
 import { MONTH, YEAR } from "../constants/expirationDate";
@@ -20,6 +20,7 @@ import Dot from "../components/atomic-design-pattern/atom/Dot";
 import ModalItem from "../components/atomic-design-pattern/molecule/ModalItem";
 import Text from "../components/atomic-design-pattern/atom/Text";
 import { CARD_COMPANY_THEME_MAP } from "../constants/cardCompany";
+import { getCardCompanyNameByCardNumber } from "../util/cardCompany";
 
 export default function CardAdd({
   goToListPage,
@@ -101,6 +102,17 @@ export default function CardAdd({
       return { ...prevCardState, cardCompany: id };
     });
   };
+
+  useEffect(() => {
+    if (modalOpen) {
+      setCardState((prev) => {
+        return {
+          ...prev,
+          cardCompany: getCardCompanyNameByCardNumber(cardNumber),
+        };
+      });
+    }
+  }, [modalOpen, cardNumber, setCardState]);
 
   return (
     <form onSubmit={onSubmitCardAdd}>
