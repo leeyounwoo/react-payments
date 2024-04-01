@@ -36,7 +36,7 @@ export default function CardAdd({
   goToCompletePage,
   setCardInfoList,
 }) {
-  const { cardState } = useContext(CardContext);
+  const { cardState, setCardState } = useContext(CardContext);
   const {
     cardNumber,
     expirationDate,
@@ -44,6 +44,7 @@ export default function CardAdd({
     cardOwnerName,
     password,
     alias,
+    theme,
   } = cardState;
 
   // 카드번호 유효한지
@@ -54,8 +55,6 @@ export default function CardAdd({
   const [isValidSecurityCode, setIsValidSecurityCode] = useState(true);
   // 비밀번호 2자리
   const [isValidPassword, setIsValidPassword] = useState(true);
-
-  const [theme, setTheme] = useState("");
 
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -184,7 +183,9 @@ export default function CardAdd({
                 onClick={() => {
                   cardNumberRef.current[THIRD_NUMBER].focus();
                   setModalOpen(false);
-                  setTheme(theme);
+                  setCardState((prevCardState) => {
+                    return { ...prevCardState, theme: theme };
+                  });
                 }}
               >
                 <Dot variant={theme} />

@@ -11,7 +11,7 @@ export default function CardComplete({
   setCardInfoList,
 }) {
   const { cardState } = useContext(CardContext);
-  const { cardNumber, expirationDate, cardOwnerName, alias } = cardState;
+  const { cardNumber, expirationDate, cardOwnerName, alias, theme } = cardState;
 
   const onSubmitCardComplete = (event) => {
     event.preventDefault();
@@ -45,6 +45,7 @@ export default function CardComplete({
         expirationDateMM={expirationDate[MONTH]}
         expirationDateYY={expirationDate[YEAR]}
         cardOwnerName={cardOwnerName}
+        theme={theme}
       />
       <Input
         className="input-underline w-75"
