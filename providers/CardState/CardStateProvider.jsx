@@ -20,7 +20,7 @@ const initialCardState = {
   password: { [FIRST_NUMBER]: "", [SECOND_NUMBER]: "" },
   securityCode: "",
   alias: "",
-  theme: "",
+  cardCompany: "",
 };
 
 export const CardStateProvider = ({ children }) => {
