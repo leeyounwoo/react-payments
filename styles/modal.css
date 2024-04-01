@@ -39,12 +39,43 @@
   align-items: center;
 }
 
-.modal-item-dot {
+.dot {
   margin: 0.5rem 1rem;
   border-radius: 50%;
   width: 2.8rem;
   height: 2.8rem;
-  background-color: #94dacd;
+}
+
+.bg-red {
+  background-color: #e24141;
+}
+
+.bg-green {
+  background-color: #73bc6d;
+}
+
+.bg-blue {
+  background-color: #547ce4;
+}
+
+.bg-pink {
+  background-color: #de59b9;
+}
+
+.bg-aqua {
+  background-color: #04c09e;
+}
+
+.bg-orange {
+  background-color: #f37d3b;
+}
+
+.bg-yellow {
+  background-color: #fbcd58;
+}
+
+.bg-blueberry {
+  background-color: #686de0;
 }
 
 .modal-item-name {

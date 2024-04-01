@@ -14,12 +14,13 @@ import InputGroup from "../components/atomic-design-pattern/molecule/InputGroup"
 import { CardContext } from "../../providers/CardState/CardStateProvider";
 import { useAutoFocus } from "../hook/useAutoFocus";
 import InputError from "../components/atomic-design-pattern/atom/InputError";
-import Modal from "../components/atomic-design-pattern/atom/Modal";
+import Modal from "../components/atomic-design-pattern/molecule/Modal";
 import {
   FIRST_NUMBER,
   SECOND_NUMBER,
   THIRD_NUMBER,
 } from "../constants/cardNumber";
+import Dot from "../components/atomic-design-pattern/atom/Dot";
 
 export default function CardAdd({
   goToListPage,
@@ -166,37 +167,37 @@ export default function CardAdd({
               setCardCompany(2);
             }}
           >
-            <div className="modal-item-dot"></div>
+            <Dot variant="red" />
             <span className="modal-item-name">클린 카드</span>
           </div>
           <div className="modal-item-container">
-            <div className="modal-item-dot"></div>
+            <Dot variant="green" />
             <span className="modal-item-name">클린 카드</span>
           </div>
           <div className="modal-item-container">
-            <div className="modal-item-dot"></div>
+            <Dot variant="blue" />
             <span className="modal-item-name">클린 카드</span>
           </div>
           <div className="modal-item-container">
-            <div className="modal-item-dot"></div>
+            <Dot variant="pink" />
             <span className="modal-item-name">클린 카드</span>
           </div>
         </div>
         <div className="flex-center">
           <div className="modal-item-container">
-            <div className="modal-item-dot"></div>
+            <Dot variant="aqua" />
             <span className="modal-item-name">클린 카드</span>
           </div>
           <div className="modal-item-container">
-            <div className="modal-item-dot"></div>
+            <Dot variant="orange" />
             <span className="modal-item-name">클린 카드</span>
           </div>
           <div className="modal-item-container">
-            <div className="modal-item-dot"></div>
+            <Dot variant="yellow" />
             <span className="modal-item-name">클린 카드</span>
           </div>
           <div className="modal-item-container">
-            <div className="modal-item-dot"></div>
+            <Dot variant="blueberry" />
             <span className="modal-item-name">클린 카드</span>
           </div>
         </div>
