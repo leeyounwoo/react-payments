@@ -102,6 +102,16 @@ export default function CardAdd({
     }
   };
 
+  const onClickCardCompanyModal = (event) => {
+    const { id } = event.target;
+
+    cardNumberRef.current[THIRD_NUMBER].focus();
+    setModalOpen(false);
+    setCardState((prevCardState) => {
+      return { ...prevCardState, theme: id };
+    });
+  };
+
   return (
     <form onSubmit={onSubmitCardAdd}>
       <h2 className="page-title">
@@ -178,17 +188,12 @@ export default function CardAdd({
         <div className="modal-grid">
           {cardCompanyList.map(({ theme, company }) => {
             return (
-              <ModalItem
-                key={company}
-                onClick={() => {
-                  cardNumberRef.current[THIRD_NUMBER].focus();
-                  setModalOpen(false);
-                  setCardState((prevCardState) => {
-                    return { ...prevCardState, theme: theme };
-                  });
-                }}
-              >
-                <Dot variant={theme} />
+              <ModalItem key={company} name={theme}>
+                <Dot
+                  variant={theme}
+                  id={theme}
+                  onClick={onClickCardCompanyModal}
+                />
                 <Text className="modal-item-name">{company}</Text>
               </ModalItem>
             );

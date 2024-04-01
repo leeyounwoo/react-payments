@@ -1,9 +1,15 @@
 import classNames from "classnames";
+import Button from "./Button";
 
-export default function Dot({ children, variant, ...props }) {
+export default function Dot({ children, variant, onClick, ...props }) {
   return (
-    <div className={classNames(`bg-${variant}`, "dot")} {...props}>
+    <Button
+      variant="link"
+      className={classNames(`bg-${variant}`, "dot")}
+      onClick={onClick}
+      {...props}
+    >
       {children}
-    </div>
+    </Button>
   );
 }

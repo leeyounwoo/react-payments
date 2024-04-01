@@ -1,7 +1,12 @@
-export default function ModalItem({ children, onClick, ...props }) {
+export default function ModalItem({ children, onClick, name, ...props }) {
   return (
-    <div className="modal-item-container" onClick={onClick} {...props}>
+    <label
+      className="modal-item-container"
+      onClick={onClick}
+      htmlFor={name}
+      {...props}
+    >
       {children}
-    </div>
+    </label>
   );
 }
