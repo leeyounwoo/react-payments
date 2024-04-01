@@ -37,6 +37,7 @@ export default function CardAdd({
     alias,
     cardCompany,
   } = cardState;
+  console.log("step3");
 
   // 카드번호 유효한지
   const [isValidCardNumber, setIsValidCardNumber] = useState(true);
